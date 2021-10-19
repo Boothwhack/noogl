@@ -19,8 +19,9 @@ add_custom_command(OUTPUT noogl.cpp
         ${opengl_registry_SOURCE_DIR}/xml/gl.xml
         noogl.cpp)
 
-add_library(noogl SHARED noogl.cpp)
+add_library(noogl SHARED noogl.cpp source/cptr.hpp source/addon.cpp source/addon.hpp)
 
+target_include_directories(noogl PRIVATE source)
 target_include_directories(noogl PUBLIC include)
 
 find_package(NodeApi 16 REQUIRED)
