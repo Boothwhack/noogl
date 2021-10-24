@@ -13,7 +13,7 @@ const generateSource = require("./lib/GenerateSource");
     const source = generateSource(objects);
 
     debugger;
-    await FS.writeFile(outputPath, source);
+    await FS.writeFile(outputPath, source.cppSource);
 })().catch(err => {
     console.error(err);
     process.exitCode = 1;
