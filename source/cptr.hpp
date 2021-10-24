@@ -13,6 +13,8 @@ public:
             InstanceMethod<&CPtr::ArrayBuffer>("arrayBuffer")
         })};
 
+        exports.Set("CPtr", func);
+
         env.GetInstanceData<NooglAddonData>()->cptrCtorRef = Napi::Persistent(func);
 
         return exports;
@@ -31,6 +33,12 @@ public:
     void* GetPtr() const
     {
         return ptr_;
+    }
+
+    template<typename T>
+    T CastPtr() const
+    {
+        return static_cast<T>(ptr_);
     }
 
     void SetPtr(void* ptr)
