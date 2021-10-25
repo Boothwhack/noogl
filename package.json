@@ -9,7 +9,6 @@
     "@beeswax/toolchain": "^1.0.0",
     "@beeswax/node-api": "^1.0.1",
     "domutils": "^2.8.0",
-    "fast-xml-parser": "^3.20.0",
     "htmlparser2": "^7.1.2",
     "node-addon-api": "^4.2.0"
   }
