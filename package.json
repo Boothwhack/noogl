@@ -1,6 +1,7 @@
 {
   "name": "@beeswax/noogl",
   "version": "0.1.0",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "node ParseXmlSpecs.js cmake-build-debug/_deps/opengl_registry-src/xml/gl.xml"
   },
