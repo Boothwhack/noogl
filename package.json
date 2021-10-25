@@ -2,6 +2,16 @@
   "name": "@beeswax/noogl",
   "version": "0.1.0",
   "types": "dist/index.d.ts",
+  "repository": "github:boothwhack/noogl",
+  "bugs": "https://github.com/boothwhack/noogl/issues",
+  "os": [
+    "win32",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "x32"
+  ],
   "scripts": {
     "build:release": "toolchain --config Release build",
     "build:debug": "toolchain --config Debug build",
