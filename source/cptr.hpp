@@ -2,6 +2,7 @@
 
 #include "addon.hpp"
 #include <napi.h>
+#include <cstring>
 
 class CPtr : public Napi::ObjectWrap<CPtr> {
     void* ptr_;
@@ -10,7 +11,8 @@ public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports)
     {
         auto func{DefineClass(env, "CPtr", {
-            InstanceMethod<&CPtr::ArrayBuffer>("arrayBuffer")
+            StaticMethod<&CPtr::FromOffset>("fromOffset"),
+            InstanceMethod<&CPtr::ArrayBuffer>("arrayBuffer"),
         })};
 
         exports.Set("CPtr", func);
@@ -46,11 +48,24 @@ public:
         ptr_ = ptr;
     }
 
+    static Napi::Value FromOffset(const Napi::CallbackInfo& info)
+    {
+        uint64_t arg(info[0].ToNumber().Int64Value());
+        return info.Env().GetInstanceData<NooglAddonData>()->cptrCtorRef.New(
+            {Napi::External<void>::New(info.Env(), (void*) arg)}
+        );
+    }
+
     Napi::Value ArrayBuffer(const Napi::CallbackInfo& info)
     {
         auto arg{info[0]};
         uint32_t length{arg.ToNumber()};
 
+        return Napi::ArrayBuffer::New(info.Env(), ptr_, length);
+    }
+
+    Napi::Value NullTerminated(const Napi::CallbackInfo& info) {
+        auto length{std::strlen(CastPtr<const char*>())};
         return Napi::ArrayBuffer::New(info.Env(), ptr_, length);
     }
 };
