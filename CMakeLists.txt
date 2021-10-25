@@ -9,9 +9,13 @@ include(FetchContent)
 FetchContent_Declare(
         OpenGL_Registry
         GIT_REPOSITORY https://github.com/KhronosGroup/OpenGL-Registry
+        GIT_SHALLOW on
         GIT_TAG 6eca3c2cdc3d1a1147302052e1f1f61cc487b79b # 24/08/2021
 )
+
+message(STATUS "Fetching OpenGL Registry")
 FetchContent_MakeAvailable(OpenGL_Registry)
+message(STATUS "Fetching OpenGL Registry - done")
 
 add_custom_command(OUTPUT noogl.cpp
         COMMAND
