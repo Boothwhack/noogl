@@ -5,6 +5,7 @@ cmake-build-*
 include
 lib
 source
+test/
 CMakeLists.txt
 gen.js
 
