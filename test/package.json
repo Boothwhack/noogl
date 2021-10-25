@@ -1,0 +1,9 @@
+{
+  "name": "noogl-test",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@beeswax/node-glfw": "^0.5.0",
+    "@beeswax/noogl": ".."
+  }
+}
