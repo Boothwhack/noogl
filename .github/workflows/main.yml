@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    tags: [v*]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "windows-latest"]
+        config: ["release", "debug"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: sudo apt install xorg-dev
+      - run: npm install
+      - run: npm run build:${{ matrix.config }} && npm run dist:${{ matrix.config }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    if: ${{ startsWith(github.event.ref, 'refs/tags/v') }}
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          registry-url: 'https://registry.npmjs.org'
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+      - run: npm install
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

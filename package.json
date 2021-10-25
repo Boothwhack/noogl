@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "node ParseXmlSpecs.js cmake-build-debug/_deps/opengl_registry-src/xml/gl.xml"
+    "build:release": "toolchain --config Release build",
+    "build:debug": "toolchain --config Debug build",
+    "dist:release": "toolchain --config Release install",
+    "dist:debug": "toolchain --config Debug install"
   },
   "devDependencies": {
     "@beeswax/toolchain": "^1.0.0",
