@@ -17,7 +17,8 @@ add_custom_command(OUTPUT noogl.cpp
         COMMAND
         node ${CMAKE_CURRENT_LIST_DIR}/gen.js
         ${opengl_registry_SOURCE_DIR}/xml/gl.xml
-        noogl.cpp)
+        noogl.cpp
+        index.d.ts)
 
 add_library(noogl SHARED noogl.cpp source/cptr.hpp source/addon.cpp source/addon.hpp)
 
@@ -42,3 +43,4 @@ install(TARGETS noogl
         DESTINATION "Release/${NODE_PLATFORM}/${NODE_ARCH}"
         RUNTIME
         DESTINATION "Release/${NODE_PLATFORM}/${NODE_ARCH}")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/index.d.ts" DESTINATION .)
